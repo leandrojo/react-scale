@@ -55,18 +55,18 @@ A style badge pill:
 A style type badge like styles buttons:
 ```jsx
 <Badge type="success">
-	Success Badge
+  Success Badge
 </Badge>
 
 <Badge type="danger">
-	Danger Badge
+  Danger Badge
 </Badge>
 ```
 
 Has also pill removable action and size:
 ```jsx
 <Badge size="sm" removable pill onPress={this.onClear}>
-	Telephone
+  Telephone
 </Badge>
 ```
 
@@ -80,30 +80,30 @@ A complete buttons props:
 A style type badge like styles buttons:
 ```jsx
 <Button type="success" onPress={this.onPress}>
-	Success Button
+  Success Button
 </Button>
 
 <Button type="danger" onPress={this.onPress}>
-	Danger Button
+  Danger Button
 </Button>
 ```
 
 And sizes:
 ```jsx
 <Button size="xs" onPress={this.onPress}>
-	Telephone
+  Button Extra Small
 </Button>
 
 <Button size="sm" onPress={this.onPress}>
-	Telephone
+  Button Small
 </Button>
 
 <Button size="lg" onPress={this.onPress}>
-	Telephone
+  Button Large
 </Button>
 
 <Button size="xl" onPress={this.onPress}>
-	Telephone
+  Button Extra Large
 </Button>
 ```
 
@@ -115,16 +115,3 @@ Using icons package `react-feather`;
 <Icons.Mail color="red" />
 <Icons.Square color="blue" size={36} />
 ```
-
-
-### Modal
-### Spinner
-### Breadcrumb
-### Dropdowns
-### Form
-### Input
-### Select
-### Tooltips
-### Popover
-### Tables
-### Typography
