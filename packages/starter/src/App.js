@@ -1,73 +1,40 @@
 import React, { Component } from "react";
-import { mapObject } from "underscore";
-import { Button, Icons, Text, View, theme, version } from "@wide/wide-core";
+import { Switch, Route } from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
+import { View, theme } from "@wide/wide-core";
 
-import "./App.css";
+import Header from "./components/Header";
 
-const { withStyles } = theme;
+import Buttons from "./screens/Buttons";
+import Icons from "./screens/Icons";
 
-console.log(version);
-
-const Wrapper = ({ children }) => (
-  <View
-    style={{
-      backgroundColor: "rgba(0, 0, 0, .1)",
-      display: "flex",
-      margin: 10,
-      width: 200
-    }}
-  >
-    {children}
-  </View>
-);
+const { css, withStyles } = theme;
 
 class App extends Component {
-  renderButtons() {
-    const buttons = [];
-    const types = ["primary", "success", "warning", "danger"];
-
-    types.map(type => {
-      buttons.push(
-        <View style={{ padding: 20, width: "100%" }} key={type}>
-          <Button type={type}>{type}</Button>
-        </View>
-      );
-      return false;
-    });
-
-    return <View style={{ display: "flex" }}>{buttons}</View>;
-  }
-
-  renderIcons() {
-    const { colors } = this.props.theme;
-    const icons = [];
-
-    mapObject(Icons, (Icon, key) => {
-      icons.push(
-        <Wrapper key={key}>
-          <Icon color={colors.primary} size={24} alt={key} />
-          <Text>{key}</Text>
-        </Wrapper>
-      );
-      return;
-    });
-
-    return <View style={{ padding: 20, width: "100%" }}>{icons}</View>;
-  }
   render() {
+    const { styles } = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          {this.renderButtons()}
-          {this.renderIcons()}
-        </header>
-      </div>
+      <Router>
+        <View {...css(styles.app)}>
+          <Header />
+          <Switch>
+            <Route exact path="/icons" component={Icons} />
+            <Route exact path="/buttons" component={Buttons} />
+          </Switch>
+        </View>
+      </Router>
     );
   }
 }
 
 const styles = ({ colors }) => {
-  return {};
+  return {
+    app: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column"
+    }
+  };
 };
 
 export default withStyles(styles)(App);

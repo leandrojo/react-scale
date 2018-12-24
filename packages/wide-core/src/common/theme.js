@@ -19,7 +19,8 @@ const colors = {
   warning: "#ffc107",
   grayExtraLight: "#e2d6d4",
   grayLight: "#bdaeac",
-  gray: "#8C7B79"
+  gray: "#8C7B79",
+  grayDark: "#343a40"
 };
 
 const fontFamily = "'Open Sans', sans-serif";
@@ -53,7 +54,7 @@ StyleSheet.registerTheme({
   fontFamily,
   text: {
     color: colors.primary,
-    size: unit * 1.2
+    size: unit * 1.4
   },
   unit
 });

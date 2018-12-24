@@ -5,10 +5,12 @@ import { omit } from "underscore";
 
 import { css, withStyles } from "~/common/theme";
 
+import { ButtonGroupContext } from "./ButtonGroup";
+
 class Button extends Component<void, Props> {
   state = {};
 
-  onPress = ev => {
+  handlePress = ev => {
     ev.preventDefault();
 
     if (typeof this.props.onClick === "function") {
@@ -19,50 +21,45 @@ class Button extends Component<void, Props> {
     this.props.onPress();
   };
 
-  render() {
-    const { children, classname, size, styles, type } = this.props;
+  renderComponent(context) {
+    const { children, classname, fluid, size, styles } = this.props;
+    const { spacing } = context;
 
-    const style = [styles.button];
+    const style = [];
+
+    const type = this.props.type ? this.props.type : context.type;
+
+    style.push(styles.button);
+
+    if (fluid) style.push(styles.button__fluid);
+
+    if (/xl|lg|sm|xs/.test(size)) {
+      style.push(styles[`button__${size}`]);
+    }
+
+    if (/primary|success|warning|danger|link/.test(type)) {
+      style.push(styles[`button__${type}`]);
+    }
+
     const propagateProps = omit(
       this.props,
-      ...["className", "css", "onPress", "onClick", "styles", "theme", "type"]
+      ...[
+        "className",
+        "css",
+        "fluid",
+        "onPress",
+        "onClick",
+        "styles",
+        "theme",
+        "type"
+      ]
     );
-
-    switch (size) {
-      case "xl":
-        style.push(styles.button__xl);
-        break;
-      case "lg":
-        style.push(styles.button__lg);
-        break;
-      case "sm":
-        style.push(styles.button__sm);
-        break;
-      case "xs":
-        style.push(styles.button__xs);
-        break;
-      default:
-    }
-
-    switch (type) {
-      case "primary":
-        style.push(styles.button__primary);
-        break;
-      case "success":
-        style.push(styles.button__success);
-        break;
-      case "warning":
-        style.push(styles.button__warning);
-        break;
-      case "danger":
-        style.push(styles.button__danger);
-        break;
-    }
 
     return (
       <button
-        onClick={this.onPress}
+        onClick={this.handlePress}
         type="button"
+        style={{ margin: `0 ${spacing}px` }}
         {...css(style)}
         {...propagateProps}
       >
@@ -70,12 +67,21 @@ class Button extends Component<void, Props> {
       </button>
     );
   }
+
+  render() {
+    return (
+      <ButtonGroupContext.Consumer>
+        {context => this.renderComponent(context)}
+      </ButtonGroupContext.Consumer>
+    );
+  }
 }
 
 Button.defaultProps = {
+  fluid: false,
   onPress: () => {},
   size: "",
-  type: ""
+  type: false
 };
 
 const styles = ({ colors, fontFamily, text }) => {
@@ -83,9 +89,10 @@ const styles = ({ colors, fontFamily, text }) => {
     button: {
       alignItems: "center",
       userSelect: "none",
-      backgroundColor: colors.gray,
+      backgroundColor: colors.grayDark,
       border: "1px solid transparent",
       borderRadius: "0.3em",
+      color: "white",
       cursor: "pointer",
       display: "flex",
       fontFamily,
@@ -93,13 +100,22 @@ const styles = ({ colors, fontFamily, text }) => {
       fontWeight: "500",
       lineHeight: "2.3em",
       height: "2.4em",
+      justifyContent: "center",
       marginBottom: "0",
       overflow: "hidden",
+      outline: "none",
       padding: "0 1em",
       textAlign: "center",
       touchAction: "manipulation",
       verticalAlign: "middle",
-      whiteSpace: "nowrap"
+      whiteSpace: "nowrap",
+
+      ":hover": {
+        opacity: 0.8
+      }
+    },
+    button__fluid: {
+      width: "100%"
     },
     button__xs: {
       fontSize: "70%"
@@ -114,16 +130,28 @@ const styles = ({ colors, fontFamily, text }) => {
       fontSize: "125%"
     },
     button__primary: {
-      backgroundColor: colors.primary
+      backgroundColor: colors.primary,
+      color: "white"
     },
     button__success: {
-      backgroundColor: colors.success
+      backgroundColor: colors.success,
+      color: "white"
     },
     button__warning: {
-      backgroundColor: colors.warning
+      backgroundColor: colors.warning,
+      color: "white"
     },
     button__danger: {
-      backgroundColor: colors.danger
+      backgroundColor: colors.danger,
+      color: "white"
+    },
+    button__link: {
+      backgroundColor: "transparent",
+      color: "#007bff",
+
+      ":hover": {
+        textDecoration: "underline"
+      }
     }
   };
 };

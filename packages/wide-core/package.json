@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Wide compiler core.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
-  "main": "/dist/wide-core-bundle.js",
+  "main": "/dist/wide-bundle.js",
   "license": "MIT",
   "scripts": {
     "start": "webpack --config webpack.config.js",
