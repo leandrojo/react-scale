@@ -1,43 +1,111 @@
 # Wide
-## Roadmap
+## TODO
+- [ ] Publish `wide-core` Storybook;
+	- [ ] Verify possibility using on GitHub Pages;
+- [ ] Create `wide-form`;
+	- [ ] Form;
+		- [ ] type; -> `(inline|horizontal|vertical)`
+	- [ ] FormGroup;
+- [ ] Create `wide-table`;
+- [ ] Create stories for show themed options;
+	- [ ] change `success` preset elements;
+	- [ ] dark version;
+	- [ ] twitter bootstrap style version;
+- [ ] Functions for work with colors;
+
+## Roadmap (order by alphabetical)
+- [ ] Alerts;
+	- [ ] color;
+	- [ ] closable;
+	- [ ] onClose;
 - [x] Badges;
-	- [x] sizes;
-	- [x] types;
-	- [x] pills;
-	- [x] removable;
+	- [x] size;
+	- [x] pill;
+	- [x] type;
+	- [x] onClear;
+- [ ] Breadcrumb;
+	- [ ] separator -> `(ReactElement|Icon)`;
+	- [ ] Breadcrumbs.Item;
 - [x] Buttons;
 	- [x] sizes;
-	- [x] types;
+	- [x] type; -> `(primary|success|warning|danger)`
 	- [x] fluid;
 	- [x] icons and text support ;
-	- [x] icons support;
-- [ ] ButtonGroup;
+	- [ ] icon;
+		- [ ] circle;
+	- [ ] disabled;
+	- [ ] active;
+	- [ ] onPress;
+	- [ ] href;
+	- [ ] animated hover;
+	- [ ] animated loading;
+- [ ] ButtonGroups;
+	- [ ] size;
+	- [ ] onChange;
+	- [ ] vertical;
+	- [ ] fluid;
+	- [ ] type; -> `(normal|checkbox|radio)`
+	- [ ] buttonType;
+- [ ] ButtonToolbars;
+	- [ ] size;
+- [ ] DatePicker;
+- [ ] Dropdowns;
+	- [ ] type; -> `(primary|success|warning|danger)`
+	- [ ] onChange;
+	- [ ] buttonType;
+	- [ ] split;
+	- [ ] caret;
+	- [ ] position;
 - [x] Icons;
 	- [x] names;
 	- [x] size;
 	- [x] color;
-- [ ] Modal;
-- [ ] Menu;
-- [ ] Spinner;
-- [ ] Breadcrumb;
-- [ ] Dropdowns;
-- [ ] Form;
-- [ ] Input;
-- [ ] InputGroup;
-- [ ] Select;
-- [ ] DatePicker;
-- [ ] Tooltips;
-- [ ] Popover;
-- [ ] Tables;
+- [ ] Inputs;
+- [ ] InputsGroup;
+- [ ] Menu; (also using on dropdown)
+	- [ ] Menu.Item;
+		- [ ] divider;
+		- [ ] header;
+		- [ ] disabled;
+		- [ ] href;
+		- [ ] onPress;
+- [ ] Modal `react-modal`;
+- [ ] Pagination;
+	- [ ] size;
+	- [ ] Pagination.Item;
+		- [ ] href;
+		- [ ] disabled;
+		- [ ] onPress;
+		- [ ] previous;
+		- [ ] next;
+- [ ] Panel;
+	- [ ] Panel.Heading;
+	- [ ] Panel.Content;
+	- [ ] Panel.Footer;
+	- [ ] expanded;
+	- [ ] type; -> `(primary|success|warning|danger)`
+	- [ ] PanelGroup;
+	- [ ] accordion;
+- [ ] Popovers;
+	- [ ] placement; -> `(left|top|right|bottom)`
+- [ ] Progress;
+	- [ ] animated
+- [ ] Selects `react-select`;
+- [ ] Spinners;
+- [ ] Tabs `react-tabs`;
+	- [ ] Tab.Item;
+	- [ ] Tab.Content;
 - [ ] Text (Typography);
 	- [x] span;
-	- [ ] code;
 	- [ ] h1;
 	- [ ] h2;
 	- [ ] h3;
 	- [ ] h4;
 	- [ ] h5;
 	- [ ] paragraph;
+	- [ ] quote;
+- [ ] Tooltips;
+	- [ ] placement; -> `(left|top|right|bottom)`
 
 ## Components
 ### Badges
@@ -55,18 +123,18 @@ A style badge pill:
 A style type badge like styles buttons:
 ```jsx
 <Badge type="success">
-  Success Badge
+	Success Badge
 </Badge>
 
 <Badge type="danger">
-  Danger Badge
+	Danger Badge
 </Badge>
 ```
 
 Has also pill removable action and size:
 ```jsx
 <Badge size="sm" removable pill onPress={this.onClear}>
-  Telephone
+	Telephone
 </Badge>
 ```
 
@@ -80,30 +148,30 @@ A complete buttons props:
 A style type badge like styles buttons:
 ```jsx
 <Button type="success" onPress={this.onPress}>
-  Success Button
+	Success Button
 </Button>
 
 <Button type="danger" onPress={this.onPress}>
-  Danger Button
+	Danger Button
 </Button>
 ```
 
 And sizes:
 ```jsx
 <Button size="xs" onPress={this.onPress}>
-  Button Extra Small
+	Telephone
 </Button>
 
 <Button size="sm" onPress={this.onPress}>
-  Button Small
+	Telephone
 </Button>
 
 <Button size="lg" onPress={this.onPress}>
-  Button Large
+	Telephone
 </Button>
 
 <Button size="xl" onPress={this.onPress}>
-  Button Extra Large
+	Telephone
 </Button>
 ```
 
