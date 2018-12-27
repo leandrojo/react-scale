@@ -1,33 +1,29 @@
 /* @flow */
 
-import React, { Component } from "react";
-import { omit } from "underscore";
+import React, { Component } from 'react';
+import { omit } from 'underscore';
 
-import { css, withStyles } from "~/common/theme";
-import View from "./View";
+import { css, withStyles } from '~/common/theme';
+import View from './View';
 
 export const ButtonGroupContext = React.createContext({
-  spacing: 0,
-  type: false
+  groupExists: false,
 });
 
 type Props = {
-  type: "inline" | "vertical"
+  type: 'inline' | 'vertical',
 };
 
 class ButtonGroup extends Component<void, Props> {
   state = {};
 
   render() {
-    const { children, spacing, styles, type } = this.props;
+    const { children, spacing, styles } = this.props;
 
-    const propagateProps = omit(
-      this.props,
-      ...["className", "css", "spacing", "styles", "theme", "type"]
-    );
+    const propagateProps = omit(this.props, ...['className', 'css', 'spacing', 'styles', 'theme']);
 
     return (
-      <ButtonGroupContext.Provider value={{ spacing, type: "link" }}>
+      <ButtonGroupContext.Provider value={{ spacing }}>
         <View {...css(styles.menu)} {...propagateProps}>
           {children}
         </View>
@@ -38,18 +34,16 @@ class ButtonGroup extends Component<void, Props> {
 
 ButtonGroup.defaultProps = {
   spacing: 0,
-  type: "inline"
+  type: 'inline',
 };
 
-const styles = () => {
-  return {
-    menu: {
-      alignItems: "center",
-      backgroundColor: "red",
-      display: "flex",
-      justifyContent: "center"
-    }
-  };
-};
+const styles = () => ({
+  menu: {
+    alignItems: 'center',
+    backgroundColor: 'red',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+});
 
 export default withStyles(styles)(ButtonGroup);

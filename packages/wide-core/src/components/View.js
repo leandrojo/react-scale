@@ -1,26 +1,39 @@
-/* @flow */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { omit } from 'underscore';
 
-import React, { Component } from "react";
-import { omit } from "underscore";
+import { css, withStyles } from '~/common/theme';
 
-import { css, withStyles } from "~/common/theme";
+const View = props => {
+  const {
+    children, className, style, styles,
+  } = props;
+  const propagateProps = omit(
+    props,
+    ...['children', 'className', 'closable', 'css', 'show', 'styles', 'theme', 'type'],
+  );
 
-const View = ({ children, className, style, styles }) => (
-  <div style={style} className={(css(styles.content).className, className)}>
-    {children}
-  </div>
-);
+  return (
+    <div style={style} className={(css(styles.content).className, className)} {...propagateProps}>
+      {children}
+    </div>
+  );
+};
 
 View.defaultProps = {
-  className: ""
+  children: null,
+  className: '',
 };
 
-const styles = () => {
-  return {
-    content: {
-      boxSizing: "content-box"
-    }
-  };
+View.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  className: PropTypes.string,
 };
+
+const styles = () => ({
+  content: {
+    boxSizing: 'content-box',
+  },
+});
 
 export default withStyles(styles)(View);

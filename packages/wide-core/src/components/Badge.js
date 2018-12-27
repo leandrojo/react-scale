@@ -1,27 +1,42 @@
-/* @flow */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import * as Icons from 'react-feather';
+import { omit } from 'underscore';
 
-import React, { Component } from "react";
-import * as Icons from "react-feather";
-import { omit } from "underscore";
+import { css, withStyles } from '~/common/theme';
+import { TextContext } from './Text';
 
-import { css, withStyles } from "~/common/theme";
-
-class Badge extends Component<void, Props> {
+class Badge extends Component {
   state = {};
 
-  handlePressClose = ev => {
+  onClear = ev => {
     ev.preventDefault();
-
-    this.props.onClose();
+    this.props.onClear();
   };
 
+  renderCloseIcon(style) {
+    const { removable, styles, theme } = this.props;
+    const { color } = theme.components.badge;
+
+    if (removable === false) return null;
+
+    return (
+      <span
+        {...css(style)}
+        onClick={this.onClear}
+        role="presentation"
+      >
+        <Icons.X {...css(styles.badgeCloseIcon)} color={color} size={16} />
+      </span>);
+  }
+
   render() {
-    const { children, classname, pill, removable, size, styles } = this.props;
+    const {
+      children, pill, removable, size, styles, type,
+    } = this.props;
 
     const style = [];
     const styleClose = [];
-
-    const type = this.props.type;
 
     style.push(styles.badge);
     styleClose.push(styles.badgeClose);
@@ -33,9 +48,9 @@ class Badge extends Component<void, Props> {
 
     if (removable) style.push(styles.badge__removable);
 
-    if (/lg|sm/.test(size)) {
+    if (/lg|md|sm/.test(size)) {
       style.push(styles[`badge__${size}`]);
-      styleClose.push(styles[`badge__${size}`]);
+      styleClose.push(styles[`badgeClose__${size}`]);
     }
 
     if (/primary|success|warning|danger|link/.test(type)) {
@@ -46,131 +61,184 @@ class Badge extends Component<void, Props> {
     const propagateProps = omit(
       this.props,
       ...[
-        "className",
-        "css",
-        "fluid",
-        "onPress",
-        "onClick",
-        "styles",
-        "theme",
-        "type"
-      ]
+        'className',
+        'css',
+        'onClear',
+        'pill',
+        'removable',
+        'size',
+        'styles',
+        'theme',
+        'type',
+      ],
     );
 
-    const content = (
-      <span {...css(style)} {...propagateProps}>
-        {children}
-      </span>
+    return (
+      <TextContext.Consumer>
+        {textContext => {
+          if (typeof textContext !== 'undefined') style.push(styles.badge__textContext);
+
+          return (
+            <span {...css(styles.container)}>
+              <span {...css(styles.content)}>
+                <span {...css(style)} {...propagateProps}>
+                  {children}
+                </span>
+                {this.renderCloseIcon(styleClose)}
+              </span>
+            </span>
+          );
+        }}
+      </TextContext.Consumer>
     );
-
-    if (removable) {
-      return (
-        <span {...css(styles.content)}>
-          {content}
-          <span {...css(styleClose)}>
-            <Icons.X size={16} color="white" />
-          </span>
-        </span>
-      );
-    }
-
-    return content;
   }
 }
 
 Badge.defaultProps = {
-  removable: false,
+  onClear: () => {},
   pill: false,
-  onPress: () => {},
-  size: "",
-  type: false
+  removable: false,
+  size: false,
+  type: false,
 };
 
-const styles = ({ colors, fontFamily, text }) => {
+Badge.propTypes = {
+  onClear: PropTypes.func,
+  pill: PropTypes.bool,
+  removable: PropTypes.bool,
+
+  /**
+   * The badges size options.
+   *
+   * @type {'sm' | 'md' | 'lg'}
+   */
+  size: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+
+  /**
+   * The badges styled options.
+   *
+   * @type {'primary' | 'success' | 'danger' | 'warning'}
+   */
+  type: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+};
+
+const styles = ({ components, colors, fontFamily }) => {
+  const { badge } = components;
+
   return {
+    container: {
+      display: 'inline-block',
+      margin: 0,
+      padding: 0,
+    },
     content: {
-      display: "flex",
-      flexDirection: "row",
+      display: 'flex',
+      flexDirection: 'row',
       flex: 1,
       margin: 0,
-      padding: 0
+      padding: 0,
     },
-    badge: {
-      alignItems: "center",
-      userSelect: "none",
-      backgroundColor: colors.grayDark,
-      border: "1px solid transparent",
-      borderRadius: "0.3em",
-      color: "white",
-      fontFamily,
-      fontSize: "90%",
-      fontWeight: "500",
-      height: "1.4em",
-      justifyContent: "center",
-      marginBottom: "0",
-      overflow: "hidden",
-      padding: "0 1em",
-      textAlign: "center",
-      verticalAlign: "middle",
-      whiteSpace: "nowrap"
-    },
+    badge: (() => {
+      const {
+        backgroundColor, borderRadius, color, fontSize, fontWeight, paddingHorizontal,
+      } = badge;
+
+      return {
+        alignItems: 'center',
+        backgroundColor,
+        border: '1px solid transparent',
+        borderRadius,
+        color,
+        display: 'flex',
+        fontFamily,
+        fontSize,
+        fontWeight,
+        justifyContent: 'center',
+        overflow: 'hidden',
+        padding: `0 ${paddingHorizontal} 0.1em`,
+        textAlign: 'center',
+        userSelect: 'none',
+        verticalAlign: 'middle',
+        whiteSpace: 'nowrap',
+      };
+    })(),
+    badge__textContext: (() => {
+      const { fontSize, marginHorizontal } = badge.context.text;
+      return {
+        fontSize,
+        margin: `0 ${marginHorizontal}`,
+      };
+    })(),
     badge__removable: {
       borderBottomRightRadius: 0,
-      borderTopRightRadius: 0
+      borderTopRightRadius: 0,
     },
-    badge__pill: {
-      borderRadius: "1em"
-    },
+    badge__pill: (() => {
+      const { borderRadius, paddingHorizontal } = badge.pill;
+      return {
+        borderRadius,
+        padding: `0 ${paddingHorizontal}`,
+      };
+    })(),
     badge__sm: {
-      fontSize: "70%"
+      fontSize: '0.7rem',
+    },
+    badge__md: {
+      fontSize: '1rem',
     },
     badge__lg: {
-      fontSize: "110%"
+      fontSize: '1.3rem',
     },
     badge__primary: {
       backgroundColor: colors.primary,
-      color: "white"
+      color: badge.types.color,
     },
     badge__success: {
       backgroundColor: colors.success,
-      color: "white"
+      color: badge.types.color,
     },
     badge__warning: {
       backgroundColor: colors.warning,
-      color: "white"
+      color: badge.types.color,
     },
     badge__danger: {
       backgroundColor: colors.danger,
-      color: "white"
+      color: badge.types.color,
     },
-    badgeClose: {
-      alignItems: "center",
-      userSelect: "none",
-      backgroundColor: colors.grayDark,
-      border: "1px solid transparent",
-      color: "white",
-      cursor: "pointer",
-      display: "flex",
-      fontSize: "90%",
-      fontWeight: "500",
-      height: "1.4em",
-      justifyContent: "center",
-      marginLeft: "0.1em",
-      overflow: "hidden",
-      padding: "0 0.65em 0 0.6em",
-      textAlign: "center",
-      verticalAlign: "middle",
-      whiteSpace: "nowrap",
-      width: 10,
+    badgeClose: (() => {
+      const {
+        backgroundColor, color, fontSize,
+      } = badge;
 
-      ":hover": {
-        opacity: 0.8
-      }
-    },
+      return {
+        alignItems: 'center',
+        backgroundColor,
+        border: '1px solid transparent',
+        color,
+        cursor: 'pointer',
+        display: 'flex',
+        fontSize,
+        justifyContent: 'center',
+        marginLeft: '3px',
+        overflow: 'hidden',
+        padding: '0 8px 0 5px',
+        textAlign: 'center',
+        userSelect: 'none',
+        verticalAlign: 'middle',
+        whiteSpace: 'nowrap',
+
+        ':hover': {
+          opacity: 0.8,
+        },
+      };
+    })(),
     badgeClose__pill: {
-      borderBottomRightRadius: "1em",
-      borderTopRightRadius: "1em"
-    }
+      borderBottomRightRadius: badge.pill.borderRadius,
+      borderTopRightRadius: badge.pill.borderRadius,
+    },
+    badgeClose__sm: {
+      marginLeft: '2px',
+    },
   };
 };
 

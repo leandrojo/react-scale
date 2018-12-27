@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../common/normalize.css";
+import "../src/common/normalize.css";
 
 export function monospace(text) {
   return `<span style="font-family:monospace;background:#f7f7f7">${text}</span>`;

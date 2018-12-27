@@ -1,19 +1,19 @@
-/* @flow */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { omit } from 'underscore';
 
-import React, { Component } from "react";
-import { omit } from "underscore";
+import { css, withStyles } from '~/common/theme';
 
-import { css, withStyles } from "~/common/theme";
+import { ButtonGroupContext } from './ButtonGroup';
+import { ButtonToolbarContext } from './ButtonToolbar';
 
-import { ButtonGroupContext } from "./ButtonGroup";
-
-class Button extends Component<void, Props> {
+class Button extends Component {
   state = {};
 
   handlePress = ev => {
     ev.preventDefault();
 
-    if (typeof this.props.onClick === "function") {
+    if (typeof this.props.onClick === 'function') {
       this.props.onClick();
       return;
     }
@@ -21,13 +21,12 @@ class Button extends Component<void, Props> {
     this.props.onPress();
   };
 
-  renderComponent(context) {
-    const { children, classname, fluid, size, styles } = this.props;
-    const { spacing } = context;
+  render() {
+    const {
+      children, fluid, size, styles, type,
+    } = this.props;
 
     const style = [];
-
-    const type = this.props.type ? this.props.type : context.type;
 
     style.push(styles.button);
 
@@ -43,116 +42,158 @@ class Button extends Component<void, Props> {
 
     const propagateProps = omit(
       this.props,
-      ...[
-        "className",
-        "css",
-        "fluid",
-        "onPress",
-        "onClick",
-        "styles",
-        "theme",
-        "type"
-      ]
+      ...['className', 'css', 'fluid', 'onPress', 'onClick', 'size', 'styles', 'theme', 'type'],
     );
 
     return (
-      <button
-        onClick={this.handlePress}
-        type="button"
-        style={{ margin: `0 ${spacing}px` }}
-        {...css(style)}
-        {...propagateProps}
-      >
-        {children}
-      </button>
-    );
-  }
-
-  render() {
-    return (
-      <ButtonGroupContext.Consumer>
-        {context => this.renderComponent(context)}
-      </ButtonGroupContext.Consumer>
+      <ButtonToolbarContext.Consumer>
+        {({ spacing }) => (
+          <ButtonGroupContext.Consumer>
+            {({ groupExists }) => {
+              if (groupExists === false && spacing) style.push(styles.button__spacing);
+              return (
+                <button
+                  onClick={this.handlePress}
+                  type="button"
+                  {...css(style)}
+                  {...propagateProps}
+                >
+                  {children}
+                </button>
+              );
+            }}
+          </ButtonGroupContext.Consumer>
+        )}
+      </ButtonToolbarContext.Consumer>
     );
   }
 }
 
 Button.defaultProps = {
+  first: false,
   fluid: false,
+  last: false,
+  onClose: () => {},
   onPress: () => {},
-  size: "",
-  type: false
+  size: false,
+  type: false,
 };
 
-const styles = ({ colors, fontFamily, text }) => {
+Button.propTypes = {
+  /**
+   * Boolean when in a ButtonGroup is a first child.
+   *
+   * @type {boolean}
+   */
+  first: PropTypes.bool,
+
+  fluid: PropTypes.bool,
+
+  /**
+   * Boolean when in a ButtonGroup is a last child.
+   *
+   * @type {boolean}
+   */
+  last: PropTypes.bool,
+
+  onClose: PropTypes.func,
+  onPress: PropTypes.func,
+
+  /**
+   * The badges size options.
+   *
+   * @type {'xs' | 'sm' | 'md' | 'lg' | 'xl'}
+   */
+  size: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+
+  /**
+   * The reason for alert and styled.
+   *
+   * @type {'success' | 'danger' | 'warning'}
+   */
+  type: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+};
+
+const styles = ({ components, colors, fontFamily }) => {
+  const { button } = components;
+  const {
+    backgroundColor, borderRadius, color, fontSize, marginHorizontal,
+  } = button;
   return {
     button: {
-      alignItems: "center",
-      userSelect: "none",
-      backgroundColor: colors.grayDark,
-      border: "1px solid transparent",
-      borderRadius: "0.3em",
-      color: "white",
-      cursor: "pointer",
-      display: "flex",
+      alignItems: 'center',
+      backgroundColor,
+      border: '1px solid transparent',
+      borderRadius,
+      color,
+      cursor: 'pointer',
+      display: 'flex',
       fontFamily,
-      fontSize: text.size,
-      fontWeight: "500",
-      lineHeight: "2.3em",
-      height: "2.4em",
-      justifyContent: "center",
-      marginBottom: "0",
-      overflow: "hidden",
-      outline: "none",
-      padding: "0 1em",
-      textAlign: "center",
-      touchAction: "manipulation",
-      verticalAlign: "middle",
-      whiteSpace: "nowrap",
+      fontSize,
+      fontWeight: '500',
+      height: '2.4em',
+      justifyContent: 'center',
+      lineHeight: '2.3em',
+      margin: 0,
+      outline: 'none',
+      overflow: 'hidden',
+      padding: '0 1em',
+      textAlign: 'center',
+      touchAction: 'manipulation',
+      userSelect: 'none',
+      verticalAlign: 'middle',
+      whiteSpace: 'nowrap',
 
-      ":hover": {
-        opacity: 0.8
-      }
+      ':hover': {
+        opacity: 0.8,
+      },
+    },
+    button__groupContext: {},
+    button__toolbarContext: {
+      margin: 0,
+    },
+    button__spacing: {
+      margin: `0 ${marginHorizontal}`,
     },
     button__fluid: {
-      width: "100%"
+      width: '100%',
     },
     button__xs: {
-      fontSize: "70%"
+      fontSize: '70%',
     },
     button__sm: {
-      fontSize: "85%"
+      fontSize: '85%',
     },
     button__lg: {
-      fontSize: "110%"
+      fontSize: '110%',
     },
     button__xl: {
-      fontSize: "125%"
+      fontSize: '125%',
     },
     button__primary: {
       backgroundColor: colors.primary,
-      color: "white"
+      color: 'white',
     },
     button__success: {
       backgroundColor: colors.success,
-      color: "white"
+      color: 'white',
     },
     button__warning: {
       backgroundColor: colors.warning,
-      color: "white"
+      color: 'white',
     },
     button__danger: {
       backgroundColor: colors.danger,
-      color: "white"
+      color: 'white',
     },
     button__link: {
-      backgroundColor: "transparent",
-      color: "#007bff",
+      backgroundColor: 'transparent',
+      color: '#007bff',
 
-      ":hover": {
-        textDecoration: "underline"
-      }
-    }
+      ':hover': {
+        textDecoration: 'underline',
+      },
+    },
   };
 };
 
