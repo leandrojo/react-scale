@@ -15,8 +15,18 @@ class Badge extends Component {
   };
 
   renderCloseIcon(style) {
-    const { removable, styles, theme } = this.props;
-    const { color } = theme.components.badge;
+    const {
+      removable, styles, theme, type,
+    } = this.props;
+
+    const { color } = (() => {
+      // Dark colors;
+      if (/primary|success|warning|danger|link/.test(type)) {
+        return theme.components.badge.types;
+      }
+
+      return theme.components.badge;
+    })();
 
     if (removable === false) return null;
 

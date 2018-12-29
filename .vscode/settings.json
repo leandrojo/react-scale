@@ -1,4 +1,6 @@
 {
   "prettier.eslintIntegration": true,
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "eslint.enable": true,
+  "eslint.packageManager": "yarn"
 }

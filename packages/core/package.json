@@ -1,9 +1,9 @@
 {
-  "name": "@wide/wide-core",
+  "name": "@react-scale/core",
   "version": "0.1.0-beta",
-  "description": "Wide compiler core.",
+  "description": "Scale compiler core.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
-  "main": "/dist/wide-bundle.js",
+  "main": "/dist/react-base-bundle.js",
   "license": "MIT",
   "scripts": {
     "start": "webpack --config webpack.config.js",
@@ -18,16 +18,9 @@
     "prop-types": "^15.6.2",
     "react-feather": "^1.1.5",
     "react-popper-tooltip": "^2.7.0",
-    "react-redux": "^5.1.0",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
     "react-with-styles": "^3.2.1",
     "react-with-styles-interface-aphrodite": "^5.0.1",
     "recompose": "^0.30.0",
-    "redux": "^4.0.1",
-    "redux-immutable": "^4.0.0",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
     "reflexbox": "^3.0.1",
     "underscore": "^1.9.1",
     "vanilla-masker": "^1.2.0"
@@ -46,10 +39,12 @@
     "@storybook/addon-links": "^4.1.3",
     "@storybook/addons": "^4.1.3",
     "@storybook/react": "^4.1.3",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-root-import": "^6.1.0",
     "css-loader": "^1.0.1",
+    "eslint": "^5.11.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
@@ -59,6 +54,7 @@
     "webpack-cli": "^3.1.2"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
   }
 }

@@ -19,16 +19,18 @@ const breakpoints = {
 };
 
 const colors = {
-  primary: '#007bff',
-  complementary: '#6c757d',
-  acent: '#D97933',
+  primary: '#633ca8',
+  secondary: '#007bff',
+  complementary: '#ff7a00',
+  acent: '#00d0d0',
   danger: '#dc3545',
   success: '#28a745',
   warning: '#ffc107',
-  grayExtraLight: '#e2d6d4',
-  grayLight: '#bdaeac',
-  gray: '#D9DADB',
-  grayDark: '#343a40',
+  grayExtraLight: '#f4f5f7',
+  grayLight: '#c1c7d0',
+  gray: '#7a869a',
+  grayDark: '#505f79',
+  grayExtraDark: '#343a40',
 };
 
 const sizing = value => ({
@@ -40,11 +42,12 @@ const fontFamily = "'Open Sans', sans-serif";
 
 const components = {
   alert: {
-    backgroundColor: colors.gray,
-    borderColor: colors.grayDark,
+    backgroundColor: colors.grayExtraLight,
+    borderColor: colors.grayLight,
     borderRadius: '0.3em',
     borderSize: 1,
     color: colors.grayDark,
+    fontWeight: 'bold',
 
     injectStyle: {},
 
@@ -65,7 +68,7 @@ const components = {
     },
   },
   badge: {
-    backgroundColor: colors.gray,
+    backgroundColor: colors.grayExtraLight,
     borderRadius: '0.3em',
     color: colors.grayDark,
     fontSize: '1rem',
@@ -85,12 +88,17 @@ const components = {
         marginHorizontal: '0.65em',
       },
     },
+    success: {
+      color: colors.grayExtraLight,
+    },
+    warning: {},
+    danger: {},
   },
   badgeClose: {
     iconSize: '2em',
   },
   button: {
-    backgroundColor: colors.gray,
+    backgroundColor: colors.grayExtraLight,
     borderRadius: '0.3em',
     color: colors.grayDark,
     fontSize: '100%',

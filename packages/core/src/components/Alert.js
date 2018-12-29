@@ -56,7 +56,7 @@ class Alert extends Component {
     if (typeof children === 'string') {
       return (
         <Content>
-          <Text>{children}</Text>
+          <Text {...css(styles.alertContent)}>{children}</Text>
         </Content>
       );
     }
@@ -74,7 +74,19 @@ Alert.defaultProps = {
 
 Alert.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+
+  /**
+   * Show button close option.
+   *
+   * @type {boolean}
+   */
   closable: PropTypes.bool,
+
+  /**
+   * External control visibility.
+   *
+   * @type {boolean}
+   */
   visible: PropTypes.bool,
 
   /**
@@ -94,13 +106,17 @@ const styles = ({ components, unit }) => {
       boxSizing: 'content-box',
     },
     alert: (() => {
-      const { backgroundColor, borderColor, color } = alert;
+      const {
+        backgroundColor, borderColor, color, fontWeight,
+      } = alert;
       return {
         backgroundColor,
         border: `${borderSize}px solid ${borderColor}`,
         borderRadius,
         color,
+        fontWeight,
         marginBottom: '0.8em',
+        letterSpacing: '0.02em',
         padding: unit,
       };
     })(),

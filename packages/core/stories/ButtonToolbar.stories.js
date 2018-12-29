@@ -22,7 +22,7 @@ storiesOf('ButtonToolbar', module)
       <Button onPress={action('clicked')}>Four</Button>
       <Button onPress={action('clicked')}>Five</Button>
       <Button onPress={action('clicked')}>
-        <Icons.Bell size={16} color={colors.grayDark} />
+        <Icons.Bell size={16} color={colors.primary} />
       </Button>
     </ButtonToolbar>
   ));
