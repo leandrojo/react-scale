@@ -1,4 +1,7 @@
-# Wide
+# React Scale
+
+[![](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg?style=flat-square)](https://github.com/leandrojo/react-scale)
+
 ## TODO
 - [ ] Publish `wide-core` Storybook;
 	- [ ] Verify possibility using on GitHub Pages;
