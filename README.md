@@ -4,7 +4,11 @@
 
 ## Installation
 
-	`npm install @react-scale/core`
+`npm install @react-scale/core`
+
+## Live Playground
+
+For examples of components in action, go to https://leandrojo.github.io/react-scale.
 
 ## Roadmap (order by alphabetical)
 - [ ] Alerts;
