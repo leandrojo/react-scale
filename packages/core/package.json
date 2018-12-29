@@ -1,29 +1,24 @@
 {
   "name": "@react-scale/core",
-  "version": "0.1.0-beta",
+  "version": "0.1.2",
   "description": "Scale compiler core.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
-  "main": "/dist/react-base-bundle.js",
+  "main": "/dist/bundle.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack --config webpack.config.js",
+    "start": "webpack --config webpack.config.dev.js",
     "build": "webpack",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -c .storybook -o ../../docs/"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "aphrodite": "^2.2.3",
-    "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.6.2",
     "react-feather": "^1.1.5",
-    "react-popper-tooltip": "^2.7.0",
     "react-with-styles": "^3.2.1",
     "react-with-styles-interface-aphrodite": "^5.0.1",
-    "recompose": "^0.30.0",
-    "reflexbox": "^3.0.1",
-    "underscore": "^1.9.1",
-    "vanilla-masker": "^1.2.0"
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

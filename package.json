@@ -1,7 +1,7 @@
 {
-  "name": "scale-workspace",
+  "name": "react-scale",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
-  "version": "0.1.0-beta",
+  "version": "0.1.2",
   "main": "index.js",
   "license": "MIT",
   "private": true,

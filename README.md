@@ -2,23 +2,13 @@
 
 [![](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser/master.svg?style=flat-square)](https://github.com/leandrojo/react-scale)
 
-## TODO
-- [ ] Publish `wide-core` Storybook;
-	- [ ] Verify possibility using on GitHub Pages;
-- [ ] Create `wide-form`;
-	- [ ] Form;
-		- [ ] type; -> `(inline|horizontal|vertical)`
-	- [ ] FormGroup;
-- [ ] Create `wide-table`;
-- [ ] Create stories for show themed options;
-	- [ ] change `success` preset elements;
-	- [ ] dark version;
-	- [ ] twitter bootstrap style version;
-- [ ] Functions for work with colors;
+## Installation
+
+	`npm install @react-scale/core`
 
 ## Roadmap (order by alphabetical)
 - [ ] Alerts;
-	- [ ] color;
+	- [x] color;
 	- [ ] closable;
 	- [ ] onClose;
 - [x] Badges;
@@ -49,8 +39,8 @@
 	- [ ] fluid;
 	- [ ] type; -> `(normal|checkbox|radio)`
 	- [ ] buttonType;
-- [ ] ButtonToolbars;
-	- [ ] size;
+- [x] ButtonToolbars;
+	- [x] spacing;
 - [ ] DatePicker;
 - [ ] Dropdowns;
 	- [ ] type; -> `(primary|success|warning|danger)`
@@ -100,13 +90,12 @@
 	- [ ] Tab.Content;
 - [ ] Text (Typography);
 	- [x] span;
-	- [ ] h1;
-	- [ ] h2;
-	- [ ] h3;
-	- [ ] h4;
-	- [ ] h5;
-	- [ ] paragraph;
-	- [ ] quote;
+	- [x] h1;
+	- [x] h2;
+	- [x] h3;
+	- [x] h4;
+	- [x] h5;
+	- [x] paragraph;
 - [ ] Tooltips;
 	- [ ] placement; -> `(left|top|right|bottom)`
 
@@ -186,3 +175,7 @@ Using icons package `react-feather`;
 <Icons.Mail color="red" />
 <Icons.Square color="blue" size={36} />
 ```
+
+## Tests
+
+  `npm test`
