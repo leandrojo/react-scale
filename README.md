@@ -99,7 +99,7 @@ And sizes:
 
 ### Icons
 
-Using icons package `react-feather`;
+Using icons package [react-feather](https://github.com/carmelopullara/react-feather);
 
 ```jsx
 <Icons.Camera />
@@ -117,7 +117,7 @@ Using icons package `react-feather`;
 - [x] ButtonToolbars;
 - [ ] DatePicker;
 - [ ] Dropdowns;
-- [x] Icons;
+- [x] Icons (external use with `react-feather`);
 - [ ] Inputs;
 - [ ] InputsGroup;
 - [ ] Menu;
