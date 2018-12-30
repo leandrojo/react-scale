@@ -7,5 +7,5 @@ export default {
   ...components,
   Icons,
   theme,
-  version: '1.0.0',
+  version: '0.1.x',
 };

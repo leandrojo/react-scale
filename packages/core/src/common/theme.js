@@ -47,7 +47,7 @@ const components = {
     borderRadius: '0.3em',
     borderSize: 1,
     color: colors.grayDark,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
 
     injectStyle: {},
 
