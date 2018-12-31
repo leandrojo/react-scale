@@ -99,9 +99,11 @@ And sizes:
 
 ### Icons
 
-Using icons package `react-feather`;
+Using icons package [react-feather](https://github.com/carmelopullara/react-feather); Feather is a collection of simply beautiful open source icons designed by [Cole Bemis](https://github.com/colebemis/).
 
 ```jsx
+import * as Icons from 'react-feather';
+
 <Icons.Camera />
 <Icons.Mail color="red" />
 <Icons.Square color="blue" size={36} />
@@ -117,7 +119,7 @@ Using icons package `react-feather`;
 - [x] ButtonToolbars;
 - [ ] DatePicker;
 - [ ] Dropdowns;
-- [x] Icons;
+- [x] Icons (external use with `react-feather`);
 - [ ] Inputs;
 - [ ] InputsGroup;
 - [ ] Menu;
