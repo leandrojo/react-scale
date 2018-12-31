@@ -124,6 +124,9 @@ const components = {
     fontSize: '100%',
     marginHorizontal: '0.3em',
   },
+  divider: {
+    color: colors.grayLight,
+  },
   input: {
     borderColor: colors.grayLight,
     borderRadius: 4,

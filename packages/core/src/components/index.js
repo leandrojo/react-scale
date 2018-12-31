@@ -4,6 +4,7 @@ import Breadcrumb from './Breadcrumb';
 import BreadcrumbToolbar from './BreadcrumbToolbar';
 import Button from './Button';
 import ButtonToolbar from './ButtonToolbar';
+import Divider from './Divider';
 import Menu from './Menu';
 import Spinner from './Spinner';
 import Text from './Text';
@@ -16,6 +17,7 @@ export default {
   BreadcrumbToolbar,
   Button,
   ButtonToolbar,
+  Divider,
   Menu,
   Spinner,
   Text,
