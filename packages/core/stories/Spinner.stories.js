@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { Spinner, Text, View } from '~/components';
-
 import Decorator, { monospace } from './Decorator';
 
 const componentInformations = `The ${monospace('Spinner')}.`;

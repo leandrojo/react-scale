@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Button, ButtonToolbar, Text } from '~/components';
-
 import Decorator, { monospace } from './Decorator';
 
 const componentInformations = `The ${monospace('Button')}.`;

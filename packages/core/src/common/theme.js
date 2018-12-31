@@ -97,6 +97,26 @@ const components = {
   badgeClose: {
     iconSize: '2em',
   },
+  breadcrumb: {
+    separator: {
+      color: colors.gray,
+    },
+    link: {
+      color: colors.grayLight,
+
+      current: {
+        color: colors.grayExtraDark,
+      },
+      disabled: {
+        color: colors.grayExtraLight,
+      },
+    },
+  },
+  breadcrumbToolbar: {
+    backgroundColor: 'white',
+    borderRadius: 2,
+    padding: '0.65em',
+  },
   button: {
     backgroundColor: colors.grayExtraLight,
     borderRadius: '0.3em',

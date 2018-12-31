@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from 'react-feather';
+import X from 'react-feather/dist/icons/x';
 import { omit } from 'underscore';
 
 import { css, withStyles } from '~/common/theme';
@@ -36,7 +36,7 @@ class Badge extends Component {
         onClick={this.onClear}
         role="presentation"
       >
-        <Icons.X {...css(styles.badgeCloseIcon)} color={color} size={16} />
+        <X {...css(styles.badgeCloseIcon)} color={color} size={16} />
       </span>);
   }
 

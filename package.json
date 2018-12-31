@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "lerna run start --parallel --scope @wide/wide-*"
+    "start": "lerna run start --parallel --scope @react-scale/*",
+    "build": "lerna run build --parallel --scope @react-scale/*"
   },
   "workspaces": {
     "nohoist": [

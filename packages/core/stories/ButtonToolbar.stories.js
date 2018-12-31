@@ -5,7 +5,6 @@ import { action } from '@storybook/addon-actions';
 
 import { colors } from '~/common/theme';
 import { Button, ButtonToolbar } from '~/components';
-
 import Decorator, { monospace } from './Decorator';
 
 const componentInformations = `The ${monospace('Button')}.`;

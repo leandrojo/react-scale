@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as Icons from 'react-feather';
+import X from 'react-feather/dist/icons/x';
 import { omit } from 'underscore';
 
 import { css, withStyles } from '~/common/theme';
@@ -21,7 +21,7 @@ class Alert extends Component {
 
     return (
       <span {...css(styles.close)}>
-        <Icons.X {...css(styles.closeIcon)} color={color} size={16} />
+        <X {...css(styles.closeIcon)} color={color} size={16} />
       </span>
     );
   }

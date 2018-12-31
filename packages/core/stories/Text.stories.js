@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { Text, View } from '~/components';
-
 import Decorator, { monospace } from './Decorator';
 
 const componentInformations = `The ${monospace('Text')}.`;
