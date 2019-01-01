@@ -113,11 +113,12 @@ import * as Icons from 'react-feather';
 
 - [x] Alerts;
 - [x] Badges;
-- [ ] Breadcrumb;
+- [x] Breadcrumb;
 - [x] Buttons;
 - [ ] ButtonGroups;
 - [x] ButtonToolbars;
 - [ ] DatePicker;
+- [x] Divider;
 - [ ] Dropdowns;
 - [x] Icons (external use with `react-feather`);
 - [ ] Inputs;
