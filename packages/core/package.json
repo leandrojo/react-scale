@@ -1,6 +1,6 @@
 {
   "name": "@react-scale/core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Scale compiler core.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
   "main": "/dist/bundle.js",
