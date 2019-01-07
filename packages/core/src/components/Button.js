@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { omit } from 'underscore';
 
-import { css, withStyles } from '~/common/theme';
+import theme from '~/common/theme';
 
 import { ButtonGroupContext } from './ButtonGroup';
 import { ButtonToolbarContext } from './ButtonToolbar';
+
+const { css, withStyles } = theme;
 
 class Button extends Component {
   state = {};
@@ -75,7 +77,7 @@ Button.defaultProps = {
   last: false,
   onClose: () => {},
   onPress: () => {},
-  size: false,
+  size: 'md',
   type: false,
 };
 
@@ -119,6 +121,7 @@ const styles = ({ components, colors, fontFamily }) => {
   const {
     backgroundColor, borderRadius, color, fontSize, marginHorizontal,
   } = button;
+
   return {
     button: {
       alignItems: 'center',

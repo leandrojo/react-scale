@@ -4,10 +4,13 @@ import Chevron from 'react-feather/dist/icons/chevron-right';
 import PropTypes from 'prop-types';
 import { omit } from 'underscore';
 
-import { css, withStyles } from '~/common/theme';
+import theme from '~/common/theme';
+
 import View from './View';
 
-export const Item = props => {
+const { css, withStyles } = theme;
+
+const Item = props => {
   const { children, className, href } = props;
   const propagateProps = omit(
     props,
@@ -21,7 +24,7 @@ export const Item = props => {
   );
 };
 
-export const Separator = ({ className, type }) => {
+const Separator = ({ className, type }) => {
   switch (type) {
     case 'arrow':
       return (
@@ -40,26 +43,21 @@ export const Separator = ({ className, type }) => {
 };
 
 class Breadcrumb extends Component {
-  // constructor() {
-  //   super();
-
-  //   this.renderChildren = this.renderChildren.bind(this);
-  // }
-
-  // renderChildren() {
-  //   return this.props.children
-  // }
-
   renderSeparator(key) {
     const Components = this.props.components;
 
-    const { separator, styles, theme } = this.props;
+    const {
+      separator,
+      styles,
+      theme: { components },
+    } = this.props;
 
     if (key === 0) return null;
+
     return (
       <Components.Separator
         {...css(styles.separator)}
-        color={theme.components.breadcrumb.separator.color}
+        color={components.breadcrumb.separator.color}
         type={separator}
       />
     );
@@ -131,7 +129,6 @@ Breadcrumb.propTypes = {
 };
 
 Breadcrumb.Item = Item;
-Breadcrumb.Separator = Separator;
 
 const styles = ({ components }) => {
   const { link } = components.breadcrumb;

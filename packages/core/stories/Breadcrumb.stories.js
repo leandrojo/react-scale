@@ -8,6 +8,8 @@ import Decorator, { monospace } from './Decorator';
 
 const componentInformations = `The ${monospace('Breadcrumb')}.`;
 
+console.log(Breadcrumb);
+
 storiesOf('Breadcrumb', module)
   .addDecorator(Decorator(componentInformations))
   .add('default', () => (

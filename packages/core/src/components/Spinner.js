@@ -4,7 +4,7 @@ import {
   isNull, omit, propertyOf, range,
 } from 'underscore';
 
-import { absolute, css, withStyles } from '~/common/theme';
+import { css, withStyles } from '~/common/theme';
 
 import { threeBounce } from './SpinnerTypes';
 import Text from './Text';
@@ -99,7 +99,7 @@ Spinner.propTypes = {
 };
 
 const styles = theme => {
-  const { components } = theme;
+  const { absolute, components } = theme;
   const { backgroundColor, tip } = components.spinner;
 
   return {

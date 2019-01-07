@@ -14,10 +14,9 @@
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "aphrodite": "^2.2.3",
+    "hoist-non-react-statics": "^3.2.1",
     "prop-types": "^15.6.2",
     "react-feather": "^1.1.5",
-    "react-with-styles": "^3.2.1",
-    "react-with-styles-interface-aphrodite": "^5.0.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

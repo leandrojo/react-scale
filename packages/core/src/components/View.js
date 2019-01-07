@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { omit } from 'underscore';
 
-import { css, withStyles } from '~/common/theme';
+import theme from '~/common/theme';
+
+const { css, withStyles } = theme;
 
 const View = props => {
   const {
