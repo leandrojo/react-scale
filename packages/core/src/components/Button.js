@@ -140,7 +140,7 @@ const styles = ({ components, colors, fontFamily }) => {
       margin: 0,
       outline: 'none',
       overflow: 'hidden',
-      padding: '0 1em',
+      padding: 0,
       textAlign: 'center',
       touchAction: 'manipulation',
       userSelect: 'none',

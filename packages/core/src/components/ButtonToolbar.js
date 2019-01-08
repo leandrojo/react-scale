@@ -7,7 +7,7 @@ import View from './View';
 
 export const ButtonToolbarContext = React.createContext({
   toolbarExists: false,
-  spacing: true,
+  spacing: false,
 });
 
 class ButtonToolbar extends Component {
