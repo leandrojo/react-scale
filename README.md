@@ -97,6 +97,50 @@ And sizes:
 </Button>
 ```
 
+Update comming soon.
+
+### Custom Theme
+
+```jsx
+import { theme, Button } from "@react-scale/core";
+
+const { registerTheme } = theme;
+
+class Theming extends Component {
+  onChangeTheme = ev => {
+    registerTheme({
+      colors: {
+        primary: ev.target.value
+      }
+    });
+  };
+
+  render() {
+    const { styles, theme } = this.props;
+    return (
+      <View {...css(styles.content)}>
+        <input
+          type="color"
+          onChange={this.onChangeTheme}
+          value={theme.colors.primary}
+        />
+        <Button type="primary">Primary Button</Button>
+      </View>
+    );
+  }
+}
+
+const style = () => {
+  return {
+    content: {
+      padding: 20
+    },
+  };
+};
+
+export default withStyles(style)(Theming);
+```
+
 ### Icons
 
 Using icons package [react-feather](https://github.com/carmelopullara/react-feather); Feather is a collection of simply beautiful open source icons designed by [Cole Bemis](https://github.com/colebemis/).
