@@ -25,7 +25,7 @@ class Button extends Component {
 
   render() {
     const {
-      children, fluid, size, styles, type,
+      children, disabled, fluid, size, styles, type,
     } = this.props;
 
     const style = [];
@@ -33,6 +33,7 @@ class Button extends Component {
     style.push(styles.button);
 
     if (fluid) style.push(styles.button__fluid);
+    if (disabled) style.push(styles.button__disabled);
 
     if (/xl|lg|sm|xs/.test(size)) {
       style.push(styles[`button__${size}`]);
@@ -72,6 +73,7 @@ class Button extends Component {
 }
 
 Button.defaultProps = {
+  disabled: false,
   first: false,
   fluid: false,
   last: false,
@@ -82,6 +84,8 @@ Button.defaultProps = {
 };
 
 Button.propTypes = {
+  disabled: PropTypes.bool,
+
   /**
    * Boolean when in a ButtonGroup is a first child.
    *
@@ -160,6 +164,9 @@ const styles = ({ components, colors, fontFamily }) => {
     },
     button__fluid: {
       width: '100%',
+    },
+    button__disabled: {
+      opacity: 0.5,
     },
     button__xs: {
       fontSize: '70%',

@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { object, omit } from 'underscore';
-import Schema from 'async-validator';
+import { omit } from 'underscore';
 import Masker from 'vanilla-masker';
 import { View, theme } from '@react-scale/core';
 
 import { FormContext } from './Form';
+import registerField from './registerField';
 
 const { css, withStyles } = theme;
 
 class Input extends Component {
   state = {
-    value: '',
+    showErrors: false,
   };
+
+  form = {};
 
   componentWillMount() {
     const { value } = this.props;
@@ -28,13 +30,18 @@ class Input extends Component {
     });
   }
 
+  onBlur = () => {
+    this.setState({
+      showErrors: true,
+    });
+  };
+
   onChange = (ev) => {
+    const { name } = this.props;
+
     const value = this.format(ev.target.value);
 
-    this.validate(value);
-    this.setState({
-      value,
-    });
+    this.props.onChange(value, name);
   };
 
   format(value: string) {
@@ -56,34 +63,16 @@ class Input extends Component {
     return value;
   }
 
-  validate(value: string = '') {
-    const { name, rules } = this.props;
-
-    console.log(rules);
-
-    const schema = new Schema(object([name], [rules]));
-
-    schema.validate(object([name], [value]), (errors, fields) => {
-      console.log(errors, fields);
-    });
-
-    console.log(FormContext.Consumer);
-  }
-
   renderError() {
-    const { styles } = this.props;
+    const { errors, styles } = this.props;
+    const showErrors = this.state.showErrors || this.props.showErrors;
 
-    if (
-      this.props.error === false
-      && (this.state.error === undefined || this.state.error === '')
-    ) {
-      return null;
-    }
+    if (this.props.errors.length === 0 || showErrors === false) return null;
 
     return (
       <div>
         <span {...css(styles.warnText)}>
-          {this.props.error || this.state.error}
+          {errors[0]}
         </span>
       </div>
     );
@@ -91,9 +80,8 @@ class Input extends Component {
 
   render() {
     const {
-      id, isDisable, isReadOnly, label, styles,
+      id, isDisable, isReadOnly, label, name, styles, value,
     } = this.props;
-    const { value } = this.state;
 
     return (
       <FormContext.Consumer>
@@ -105,6 +93,7 @@ class Input extends Component {
             <input
               {...css(styles.input)}
               disabled={isDisable}
+              name={name}
               onBlur={this.onBlur}
               onChange={this.onChange}
               onFocus={this.props.onInputFocus}
@@ -117,11 +106,12 @@ class Input extends Component {
               }}
               {...omit(
                 this.props,
+                'inputRef',
                 'label',
                 'onBlur',
                 'onChange',
                 'onInputFocus',
-                'inputRef',
+                'rules',
                 'value',
               )}
             />
@@ -179,4 +169,4 @@ const style = () => ({
   warnText: {},
 });
 
-export default withStyles(style)(Input);
+export default withStyles(style)(registerField(Input));
