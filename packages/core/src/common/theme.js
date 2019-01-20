@@ -25,8 +25,9 @@ const breakpoints = {
 };
 
 const colors = {
-  primary: '#633ca8',
+  primary: '#335599',
   secondary: '#007bff',
+  // complementary: '#0F29F6',
   complementary: '#ff7a00',
   acent: '#00d0d0',
   danger: '#dc3545',
@@ -42,9 +43,8 @@ const colors = {
 const fontFamily = "'Open Sans', sans-serif";
 
 const typography = {
-  color: 'black',
+  color: colors.grayExtraDark,
   fontSize: unit * 1.4,
-
   heading: {
     injectStyle: {
       marginBottom: 5,
@@ -155,25 +155,34 @@ function components(theme = {}) {
       backgroundColor: theme.colors.grayExtraLight,
       borderRadius: '0.3em',
       color: theme.colors.grayDark,
+      fontFamily,
+      fontWeight: 'normal',
       fontSize: '100%',
       marginHorizontal: '0.3em',
     },
     divider: {
       color: theme.colors.grayLight,
     },
-    input: {
-      borderColor: theme.colors.grayLight,
-      borderRadius: 4,
-      borderSize: 1,
-      fontFamily,
-      fontSize: 12,
-      boxShadow: {
-        color: theme.colors.grayExtraLight,
-        offset: 'inset 0 1px 3px',
-      },
-    },
+    input: (() => {
+      const padding = unit * 1.5;
+      const width = `calc(100% - ${padding * 2}px)`;
+
+      return {
+        borderColor: '#DFE3E7',
+        borderRadius: 4,
+        borderSize: 1,
+        boxShadow: {
+          color: theme.colors.grayExtraLight,
+          offset: 'inset 0 1px 3px',
+        },
+        fontFamily,
+        fontSize: 12,
+        padding,
+        width,
+      };
+    })(),
     label: {
-      color: theme.colors.complementary,
+      color: theme.colors.grayDark,
       fontFamily,
       fontSize: 14,
       paddingVertical: unit * 0.4,
@@ -218,11 +227,13 @@ class Theming {
     this.withStyles = this.withStyles.bind(this);
   }
 
-  registerTheme(sources, next = () => {}) {
-    this.theme = mergeDeep(this.theme, sources);
-    this.theme = mergeDeep(this.theme, { components: components(sources) });
+  async registerTheme(sources, next = () => {}) {
+    this.theme = await mergeDeep(this.theme, sources);
+    this.theme = await mergeDeep(this.theme, {
+      components: components(sources),
+    });
 
-    next();
+    next(this.theme);
 
     return this.theme;
   }

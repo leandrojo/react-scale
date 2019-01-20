@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -10,6 +11,7 @@ module.exports = {
     libraryTarget: 'umd',
   },
   plugins: [
+    new DuplicatePackageCheckerPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),

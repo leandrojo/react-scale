@@ -39,7 +39,7 @@ class Button extends Component {
       style.push(styles[`button__${size}`]);
     }
 
-    if (/primary|success|warning|danger|link/.test(type)) {
+    if (/primary|complementary|success|warning|danger|link/.test(type)) {
       style.push(styles[`button__${type}`]);
     }
 
@@ -115,7 +115,7 @@ Button.propTypes = {
   /**
    * The reason for alert and styled.
    *
-   * @type {'success' | 'danger' | 'warning'}
+   * @type { 'primary' | 'complementary' | 'success' | 'danger' | 'warning'}
    */
   type: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
@@ -123,7 +123,7 @@ Button.propTypes = {
 const styles = ({ components, colors, fontFamily }) => {
   const { button } = components;
   const {
-    backgroundColor, borderRadius, color, fontSize, marginHorizontal,
+    backgroundColor, borderRadius, color, fontSize, fontWeight, marginHorizontal,
   } = button;
 
   return {
@@ -137,14 +137,14 @@ const styles = ({ components, colors, fontFamily }) => {
       display: 'flex',
       fontFamily,
       fontSize,
-      fontWeight: '500',
+      fontWeight,
       height: '2.4em',
       justifyContent: 'center',
       lineHeight: '2.3em',
       margin: 0,
       outline: 'none',
       overflow: 'hidden',
-      padding: 0,
+      padding: '0 10px',
       textAlign: 'center',
       touchAction: 'manipulation',
       userSelect: 'none',
@@ -182,6 +182,10 @@ const styles = ({ components, colors, fontFamily }) => {
     },
     button__primary: {
       backgroundColor: colors.primary,
+      color: 'white',
+    },
+    button__complementary: {
+      backgroundColor: colors.complementary,
       color: 'white',
     },
     button__success: {

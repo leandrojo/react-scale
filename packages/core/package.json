@@ -1,6 +1,6 @@
 {
   "name": "@react-scale/core",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Scale compiler core.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
   "main": "/dist/bundle.js",
@@ -38,6 +38,7 @@
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-plugin-root-import": "^6.1.0",
     "css-loader": "^1.0.1",
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "^5.11.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "2.14.0",

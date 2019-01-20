@@ -159,6 +159,14 @@ const styles = ({ fontFamily, typography }) => ({
       fontFamily,
     };
   })(),
+  paragraph: (() => {
+    const { color, fontSize } = typography;
+    return {
+      color,
+      fontSize,
+      fontFamily,
+    };
+  })(),
   heading: (() => {
     const { color, injectStyle } = typography.heading;
     return {
@@ -173,36 +181,42 @@ const styles = ({ fontFamily, typography }) => ({
     const { fontSize } = typography.h1;
     return {
       fontSize,
+      fontFamily,
     };
   })(),
   heading__2: (() => {
     const { fontSize } = typography.h2;
     return {
       fontSize,
+      fontFamily,
     };
   })(),
   heading__3: (() => {
     const { fontSize } = typography.h3;
     return {
       fontSize,
+      fontFamily,
     };
   })(),
   heading__4: (() => {
     const { fontSize } = typography.h4;
     return {
       fontSize,
+      fontFamily,
     };
   })(),
   heading__5: (() => {
     const { fontSize } = typography.h5;
     return {
       fontSize,
+      fontFamily,
     };
   })(),
   heading__6: (() => {
     const { fontSize } = typography.h6;
     return {
       fontSize,
+      fontFamily,
     };
   })(),
   italic: (() => {
