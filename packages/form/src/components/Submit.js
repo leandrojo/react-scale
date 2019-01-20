@@ -10,7 +10,6 @@ class Submit extends Component {
   static contextType = FormContext;
 
   onPress = () => {
-    console.log(this.context);
     this.context.onSubmit();
   };
 

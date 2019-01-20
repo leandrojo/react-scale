@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -9,7 +10,16 @@ module.exports = {
     filename: 'bundle.js',
     libraryTarget: 'umd',
   },
+  resolve: {
+    alias: {
+      '@react-scale/core': path.resolve('../core'),
+    },
+  },
+  externals: {
+    '@react-scale/core': '@react-scale/core',
+  },
   plugins: [
+    new DuplicatePackageCheckerPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),

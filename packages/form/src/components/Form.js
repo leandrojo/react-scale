@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Schema from 'async-validator';
-import { object } from 'underscore';
+import { object, pluck, reduce } from 'underscore';
 import { View, theme } from '@react-scale/core';
 
 const { css, withStyles } = theme;
@@ -32,23 +34,34 @@ class Form extends Component {
   };
 
   onSubmit = () => {
-    console.log(this.state);
+    console.log('Errors length:', this.getCount());
+
     this.setState({
       showErrors: true,
     });
+
+    if (this.getCount() === 0) this.props.onSubmit(this.state.values);
   };
 
+  getCount = () => reduce(pluck(this.state.errors, 'length'), (len, before) => len + before, 0) || 0;
+
   registerField = (name, rules = []) => {
-    this.setState(state => ({
-      rules: Object.assign(state.rules, object([name], [rules])),
-    }));
-    this.schema = new Schema(Object.assign(this.state.rules, object([name], [rules])));
+    this.setState(state => {
+      const newRules = Object.assign(state.rules, object([name], [rules]));
+
+      this.schema = new Schema(newRules);
+
+      return {
+        rules: newRules,
+      };
+    });
+
     this.validate(name, '');
   };
 
   validate(name, value = '') {
     const { values } = this.state;
-    this.schema.validate(Object.assign(values, object([name], [value])), (errors) => {
+    this.schema.validate(Object.assign(values, object([name], [value])), errors => {
       this.setState({
         errors,
       });

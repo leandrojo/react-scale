@@ -9,26 +9,44 @@ import registerField from './registerField';
 
 const { css, withStyles } = theme;
 
-class Input extends Component {
+class Textarea extends Component {
   state = {
     showErrors: false,
+    isDisable: false,
     isInputFocus: false,
+    isReadOnly: false,
+    value: '',
   };
 
   form = {};
 
   componentWillMount() {
-    const { value } = this.props;
+    const { disabled, children, readOnly } = this.props;
+
+    this.setIsDisable(disabled);
+    this.setIsReadOnly(readOnly);
 
     this.setState(state => {
       switch (typeof value) {
         case 'number':
-          return Object.assign(state, { value: value.toFixed(2) });
+          return Object.assign(state, {
+            value: children.toFixed(2),
+          });
         case 'string':
         default:
-          return Object.assign(state, { value: this.format(value) });
+          return Object.assign(state, {
+            value: this.format(children),
+          });
       }
     });
+  }
+
+  setIsDisable(isDisable = false) {
+    this.setState({ isDisable });
+  }
+
+  setIsReadOnly(isReadOnly = false) {
+    this.setState({ isReadOnly });
   }
 
   onBlur = () => {
@@ -53,17 +71,6 @@ class Input extends Component {
   };
 
   format(value: string) {
-    const moneyFormatter = {
-      precision: 2,
-      separator: ',',
-      delimiter: '.',
-      unit: 'R$',
-    };
-
-    if (this.props.isMoney) {
-      return Masker.toMoney(Masker.toNumber(value), moneyFormatter);
-    }
-
     if (typeof value === 'string' && this.props.format !== '') {
       return Masker.toPattern(value, this.props.format);
     }
@@ -101,25 +108,32 @@ class Input extends Component {
 
   render() {
     const {
-      id, isDisable, isReadOnly, name, styles, value,
+      id, name, styles,
     } = this.props;
+    const {
+      isDisable, isReadOnly, value,
+    } = this.state;
+
+    const style = [];
+
+    style.push(styles.textarea);
 
     return (
       <FormContext.Consumer>
         {() => (
           <View {...css(styles.content)}>
             {this.renderLabel()}
-            <input
-              {...css(styles.input)}
+            <textarea
+              {...css(style)}
+              cols="30"
               disabled={isDisable}
               name={name}
               onBlur={this.onBlur}
               onChange={this.onChange}
               onFocus={this.onFocus}
               readOnly={isReadOnly}
-              type="text"
+              rows="10"
               id={id}
-              value={value}
               ref={ref => {
                 this.input = ref;
               }}
@@ -132,10 +146,13 @@ class Input extends Component {
                 'onFocus',
                 'onInputFocus',
                 'placeholder',
+                'readOnly',
                 'rules',
                 'value',
               )}
-            />
+            >
+              {value}
+            </textarea>
             {this.renderError()}
           </View>
         )}
@@ -144,7 +161,8 @@ class Input extends Component {
   }
 }
 
-Input.defaultProps = {
+Textarea.defaultProps = {
+  errors: [],
   format: '',
   id: '',
   isMoney: false,
@@ -152,11 +170,13 @@ Input.defaultProps = {
   onError: () => {},
   onSuccess: () => {},
   placeholder: '',
+  readOnly: false,
   required: false,
   rules: [],
 };
 
-Input.propTypes = {
+Textarea.propTypes = {
+  errors: PropTypes.arrayOf(),
   format: PropTypes.string,
   id: PropTypes.string,
   isMoney: PropTypes.bool,
@@ -165,6 +185,7 @@ Input.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
   placeholder: PropTypes.string,
+  readOnly: PropTypes.bool,
   required: PropTypes.bool,
   rules: PropTypes.arrayOf(),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -176,7 +197,7 @@ const style = ({ colors, components }) => ({
     padding: '20px 0 10px',
     position: 'relative',
   },
-  input: (() => {
+  textarea: (() => {
     const {
       borderColor, borderRadius, borderSize, padding, width,
     } = components.input;
@@ -187,6 +208,7 @@ const style = ({ colors, components }) => ({
       borderRadius,
       boxShadow: 'none',
       padding,
+      resize: 'none',
       width,
 
       ':focus': {
@@ -224,4 +246,4 @@ const style = ({ colors, components }) => ({
   warnText: {},
 });
 
-export default withStyles(style)(registerField(Input));
+export default withStyles(style)(registerField(Textarea));
