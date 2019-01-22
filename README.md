@@ -141,6 +141,10 @@ const style = () => {
 export default withStyles(style)(Theming);
 ```
 
+#### Playground Online
+
+https://codesandbox.io/s/m9qxn23w8
+
 ### Icons
 
 Using icons package [react-feather](https://github.com/carmelopullara/react-feather); Feather is a collection of simply beautiful open source icons designed by [Cole Bemis](https://github.com/colebemis/).
