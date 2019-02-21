@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import parse from 'color-parse';
 
 import { mergeDeep } from './mergeDeep';
 
@@ -25,9 +26,8 @@ const breakpoints = {
 };
 
 const colors = {
-  primary: '#335599',
+  primary: '#0F29F6',
   secondary: '#007bff',
-  // complementary: '#0F29F6',
   complementary: '#ff7a00',
   acent: '#00d0d0',
   danger: '#dc3545',
@@ -159,6 +159,7 @@ function components(theme = {}) {
       fontWeight: 'normal',
       fontSize: '100%',
       marginHorizontal: '0.3em',
+      paddingHorizontal: '10px',
     },
     divider: {
       color: theme.colors.grayLight,
@@ -177,6 +178,22 @@ function components(theme = {}) {
         },
         fontFamily,
         fontSize: 12,
+        padding,
+        width,
+      };
+    })(),
+    checkbox: (() => {
+      const padding = unit * 1.2;
+      const width = `calc(100% - ${padding * 2}px)`;
+
+      return {
+        borderColor: '#DFE3E7',
+        borderRadius: 4,
+        borderSize: 1,
+        boxShadow: {
+          color: theme.colors.grayExtraLight,
+          offset: 'inset 0 1px 3px',
+        },
         padding,
         width,
       };
@@ -229,9 +246,6 @@ class Theming {
 
   async registerTheme(sources, next = () => {}) {
     this.theme = await mergeDeep(this.theme, sources);
-    this.theme = await mergeDeep(this.theme, {
-      components: components(sources),
-    });
 
     next(this.theme);
 
@@ -259,6 +273,7 @@ const { registerTheme, withStyles } = new Theming(defaultTheme);
 export default {
   colors,
   css: style => ({ className: css(style) }),
+  parse,
   registerTheme,
   sizing,
   withStyles,

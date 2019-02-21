@@ -1,6 +1,6 @@
 {
   "name": "@react-scale/core",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "Scale compiler core.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
   "main": "/dist/bundle.js",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "aphrodite": "^2.2.3",
+    "color-parse": "^1.3.7",
     "hoist-non-react-statics": "^3.2.1",
     "prop-types": "^15.6.2",
     "react-feather": "^1.1.5",

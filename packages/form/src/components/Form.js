@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Schema from 'async-validator';
-import { object, pluck, reduce } from 'underscore';
+import { object } from 'underscore';
 import { View, theme } from '@react-scale/core';
 
 const { css, withStyles } = theme;
@@ -18,7 +18,7 @@ export const FormContext = React.createContext({
 class Form extends Component {
   state = {
     isCompleted: true,
-    errors: {},
+    errors: [],
     rules: {},
     showErrors: false,
     values: {},
@@ -34,8 +34,6 @@ class Form extends Component {
   };
 
   onSubmit = () => {
-    console.log('Errors length:', this.getCount());
-
     this.setState({
       showErrors: true,
     });
@@ -43,10 +41,10 @@ class Form extends Component {
     if (this.getCount() === 0) this.props.onSubmit(this.state.values);
   };
 
-  getCount = () => reduce(pluck(this.state.errors, 'length'), (len, before) => len + before, 0) || 0;
+  getCount = () => this.state.errors.length || 0;
 
-  registerField = (name, rules = []) => {
-    this.setState(state => {
+  registerField = async (name, rules = []) => {
+    await this.setState(async state => {
       const newRules = Object.assign(state.rules, object([name], [rules]));
 
       this.schema = new Schema(newRules);
@@ -63,19 +61,19 @@ class Form extends Component {
     const { values } = this.state;
     this.schema.validate(Object.assign(values, object([name], [value])), errors => {
       this.setState({
-        errors,
+        errors: errors || [],
       });
     });
   }
 
   render() {
-    const { children, styles } = this.props;
+    const { children, className, styles } = this.props;
     const {
       errors, isCompleted, rules, showErrors, values,
     } = this.state;
 
     return (
-      <View {...css(styles.content)}>
+      <View className={(css(styles.content).className, className)}>
         <FormContext.Provider
           value={{
             errors,
@@ -96,9 +94,15 @@ class Form extends Component {
   }
 }
 
+Form.defaultProps = {
+  className: '',
+};
+
 Form.propTypes = {
   children: PropTypes.element.isRequired,
+  className: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
+  styles: PropTypes.objectOf().isRequired,
 };
 
 const style = () => ({

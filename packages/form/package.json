@@ -1,6 +1,6 @@
 {
   "name": "@react-scale/form",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "Scale compiler form.",
   "author": "Leandro Araujo <contato@leandroaraujo.me>",
   "main": "/dist/bundle.js",

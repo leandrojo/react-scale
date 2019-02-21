@@ -21,7 +21,7 @@ class Textarea extends Component {
   form = {};
 
   componentWillMount() {
-    const { disabled, children, readOnly } = this.props;
+    const { disabled, readOnly, value } = this.props;
 
     this.setIsDisable(disabled);
     this.setIsReadOnly(readOnly);
@@ -30,12 +30,12 @@ class Textarea extends Component {
       switch (typeof value) {
         case 'number':
           return Object.assign(state, {
-            value: children.toFixed(2),
+            value: value.toFixed(2),
           });
         case 'string':
         default:
           return Object.assign(state, {
-            value: this.format(children),
+            value: this.format(value),
           });
       }
     });
@@ -134,6 +134,7 @@ class Textarea extends Component {
               readOnly={isReadOnly}
               rows="10"
               id={id}
+              value={value}
               ref={ref => {
                 this.input = ref;
               }}
@@ -150,9 +151,7 @@ class Textarea extends Component {
                 'rules',
                 'value',
               )}
-            >
-              {value}
-            </textarea>
+            />
             {this.renderError()}
           </View>
         )}

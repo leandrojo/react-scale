@@ -123,7 +123,7 @@ Button.propTypes = {
 const styles = ({ components, colors, fontFamily }) => {
   const { button } = components;
   const {
-    backgroundColor, borderRadius, color, fontSize, fontWeight, marginHorizontal,
+    backgroundColor, borderRadius, color, fontSize, fontWeight, marginHorizontal, paddingHorizontal,
   } = button;
 
   return {
@@ -144,7 +144,7 @@ const styles = ({ components, colors, fontFamily }) => {
       margin: 0,
       outline: 'none',
       overflow: 'hidden',
-      padding: '0 10px',
+      padding: `0 ${paddingHorizontal}`,
       textAlign: 'center',
       touchAction: 'manipulation',
       userSelect: 'none',

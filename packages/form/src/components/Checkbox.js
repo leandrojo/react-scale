@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { omit } from 'underscore';
-import Masker from 'vanilla-masker';
 import { View, theme } from '@react-scale/core';
 
 import { FormContext } from './Form';
@@ -9,67 +8,41 @@ import registerField from './registerField';
 
 const { css, withStyles } = theme;
 
-class Input extends Component {
+class Checkbox extends Component {
   state = {
+    isChecked: false,
     showErrors: false,
-    isInputFocus: false,
+    value: '',
   };
 
   form = {};
 
-  componentWillMount() {
-    const { value } = this.props;
+  async componentWillMount() {
+    const { checked, name, value } = this.props;
 
-    this.setState(state => {
-      switch (typeof value) {
-        case 'number':
-          return Object.assign(state, { value: value.toFixed(2) });
-        case 'string':
-        default:
-          return Object.assign(state, { value: this.format(value) });
-      }
+    await this.setState({
+      isChecked: checked,
+      value: value === '' ? name : value, // checkbox need a own value.
     });
+
+    this.onChange(this.state.isChecked, name);
   }
 
   onBlur = () => {
     this.setState({
-      isInputFocus: true,
       showErrors: true,
     });
   };
 
-  onChange = ev => {
+  onChange = async () => {
     const { name } = this.props;
 
-    const value = this.format(ev.target.value);
+    await this.setState(state => ({
+      isChecked: state.isChecked === false,
+    }));
 
-    this.props.onChange(value, name);
+    this.props.onChange(this.state.isChecked, name);
   };
-
-  onFocus = () => {
-    this.setState({
-      isInputFocus: true,
-    });
-  };
-
-  format(value: string) {
-    const moneyFormatter = {
-      precision: 2,
-      separator: ',',
-      delimiter: '.',
-      unit: 'R$',
-    };
-
-    if (this.props.isMoney) {
-      return Masker.toMoney(Masker.toNumber(value), moneyFormatter);
-    }
-
-    if (typeof value === 'string' && this.props.format !== '') {
-      return Masker.toPattern(value, this.props.format);
-    }
-
-    return value;
-  }
 
   renderError() {
     const { errors, styles } = this.props;
@@ -86,27 +59,45 @@ class Input extends Component {
 
   renderLabel() {
     const {
-      id, label, styles,
+      id, label, styles, value,
     } = this.props;
-    const { isInputFocus } = this.state;
 
     const style = [styles.label];
 
-    if (isInputFocus) style.push(styles.label__focus);
+    return (
+      <View onClick={() => this.onChange(value)} role="presentation" {...css(styles.labelContent)}>
+        <label {...css(style)} htmlFor={id}>
+          {label}
+        </label>
+        {this.renderError()}
+      </View>
+    );
+  }
+
+  renderBox() {
+    const {
+      styles, value,
+    } = this.props;
+    const { isChecked } = this.state;
+
+    const style = [styles.select];
+
+    if (isChecked) style.push(styles.select__active);
 
     return (
-      <label {...css(style)} htmlFor={id}>
-        {label}
-      </label>
+      <View onClick={() => this.onChange(value)} role="presentation" {...css(styles.box)}>
+        <View {...css(style)} />
+      </View>
     );
   }
 
   render() {
     const {
-      errors, id, isDisable, isReadOnly, name, styles, value,
+      errors, id, isDisable, isReadOnly, name, styles,
     } = this.props;
-    const showErrors = this.state.showErrors || this.props.showErrors;
+    const { isChecked, value } = this.state;
 
+    const showErrors = this.state.showErrors || this.props.showErrors;
     const style = [styles.input];
 
     if (errors.length !== 0 && showErrors !== false) style.push(styles.input__danger);
@@ -116,24 +107,25 @@ class Input extends Component {
         {() => (
           <View {...css(styles.content)}>
             <View {...css(styles.inner)}>
+              {this.renderBox()}
               {this.renderLabel()}
               <input
                 {...css(style)}
                 disabled={isDisable}
                 name={name}
-                onBlur={this.onBlur}
                 onChange={this.onChange}
-                onFocus={this.onFocus}
                 readOnly={isReadOnly}
-                type="text"
+                type="checkbox"
                 id={id}
                 value={value}
+                checked={isChecked}
                 ref={ref => {
                   this.input = ref;
                 }}
                 {...omit(
                   this.props,
                   'inputRef',
+                  'isChecked',
                   'label',
                   'onBlur',
                   'onChange',
@@ -145,7 +137,6 @@ class Input extends Component {
                 )}
               />
             </View>
-            {this.renderError()}
           </View>
         )}
       </FormContext.Consumer>
@@ -153,7 +144,8 @@ class Input extends Component {
   }
 }
 
-Input.defaultProps = {
+Checkbox.defaultProps = {
+  checked: false,
   format: '',
   id: '',
   isMoney: false,
@@ -163,9 +155,11 @@ Input.defaultProps = {
   placeholder: '',
   required: false,
   rules: [],
+  value: '',
 };
 
-Input.propTypes = {
+Checkbox.propTypes = {
+  checked: PropTypes.bool,
   format: PropTypes.string,
   id: PropTypes.string,
   isMoney: PropTypes.bool,
@@ -176,44 +170,62 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   rules: PropTypes.arrayOf(),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 const style = ({ colors, components, ...common }) => ({
   content: {
-    padding: '0 0 10px',
+    marginBottom: 10,
   },
   inner: {
-    flex: 1,
-    padding: '20px 0 0',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    padding: '5px 0 0',
     position: 'relative',
   },
-  input: (() => {
-    const {
-      borderColor, borderRadius, borderSize, padding, width,
-    } = components.input;
+  input: {
+    appearance: 'none',
+    boxShadow: 'none',
 
+    ':focus': {
+      outline: 'none',
+      borderColor: colors.secondary,
+    },
+  },
+  box: (() => {
+    const {
+      borderColor, borderRadius, borderSize,
+    } = components.checkbox;
     return {
-      appearance: 'none',
+      alignItems: 'center',
       border: `${borderSize}px solid ${borderColor}`,
       borderRadius,
-      boxShadow: 'none',
-      padding,
-      width,
-
-      ':focus': {
-        outline: 'none',
-        borderColor: colors.secondary,
-      },
+      cursor: 'pointer',
+      display: 'flex',
+      height: 16,
+      justifyContent: 'center',
+      marginRight: 10,
+      width: 16,
     };
   })(),
-  input__danger: {
-    borderColor: colors.danger,
-    boxShadow: '0 0 0 4px #ffe8e6',
+  select: (() => {
+    const {
+      borderRadius,
+    } = components.checkbox;
+
+    return {
+      borderRadius: borderRadius - 1,
+      height: 14,
+      width: 14,
+    };
+  })(),
+  select__active: {
+    backgroundColor: colors.acent,
   },
   label: (() => {
     const {
-      color, fontFamily, fontSize, paddingVertical,
+      color, fontFamily, fontSize,
     } = components.label;
 
     return {
@@ -221,24 +233,13 @@ const style = ({ colors, components, ...common }) => ({
       display: 'block',
       fontFamily,
       fontSize,
-      padding: `${paddingVertical}px 0px`,
       pointerEvents: 'none',
-      position: 'absolute',
-      top: 'calc(50% + 8px)',
-      left: 10,
-      transform: 'translateY(-50%)',
       transition: 'font-size 100ms, top 100ms, color 100ms',
     };
   })(),
-  label__focus: {
-    fontSize: '70%',
-    left: 0,
-    top: 8,
-    transition: 'font-size 250ms, top 250ms, color 250ms',
+  labelContent: {
   },
-  warn: {
-    paddingTop: 5,
-  },
+  warn: {},
   warnText: {
     color: colors.danger,
     fontSize: common.typography.fontSize * 0.8,
@@ -246,4 +247,4 @@ const style = ({ colors, components, ...common }) => ({
   },
 });
 
-export default withStyles(style)(registerField(Input));
+export default withStyles(style)(registerField(Checkbox));

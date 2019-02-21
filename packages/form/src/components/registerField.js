@@ -14,10 +14,22 @@ export default function registerField(Component: any) {
         this.context.registerField(name, rules);
       }
 
-      getPropertyOf(property) {
-        const { name } = this.props;
-        return propertyOf(propertyOf(this.context)(property))(name);
+      /**
+       * @description Get value of a specific property.
+       * @param  {string} property - property 'name' is the key name.
+       */
+
+      getValue() {
+        const { name, value } = this.props;
+
+        if (value !== '') return value;
+
+        return propertyOf(propertyOf(this.context)('values'))(name);
       }
+
+      /**
+       * @description Get yours errors.
+       */
 
       getErrors() {
         const { errors } = this.context;
@@ -36,7 +48,7 @@ export default function registerField(Component: any) {
             errors={this.getErrors()}
             showErrors={showErrors}
             onChange={onChange}
-            value={this.getPropertyOf('values')}
+            value={this.getValue()}
           />
         );
       }
@@ -44,11 +56,13 @@ export default function registerField(Component: any) {
 
     Field.defaultProps = {
       rules: [],
+      value: '',
     };
 
     Field.propTypes = {
       name: PropTypes.string.isRequired,
       rules: PropTypes.arrayOf(PropTypes.objectOf()),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     };
 
     return Field;
